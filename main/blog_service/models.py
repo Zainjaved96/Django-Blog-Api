@@ -5,6 +5,7 @@ from django.db import models
 class Reporter(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    company = models.CharField(max_length=100 ,default='Independent')
     email = models.EmailField()
 
 
