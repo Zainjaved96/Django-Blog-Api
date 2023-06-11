@@ -81,8 +81,29 @@ class ArticleView(generics.GenericAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializers
 
-    def get(self, *args, **kwargs):
-        data = self.queryset.all()
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter('search_key', openapi.IN_QUERY,
+                              default=None, required=False,
+                              type=openapi.TYPE_STRING,
+                              description="send search key"
+                              ),
+
+        ]
+    )
+    def get(self, request, *args, **kwargs):
+        search_key = request.GET.get("search_key")
+
+        queryset = self.queryset
+
+        if search_key:
+            data = queryset.filter(
+                Q(headline__icontains=search_key) |
+                Q(reporter__first_name__icontains=search_key) |
+                Q(reporter__last_name__icontains=search_key)
+            )
+        else:
+            data = queryset.all()
         paginated = self.paginate_queryset(data)
         serialized = self.get_serializer(paginated, many=True)
         return self.get_paginated_response(serialized.data)
