@@ -16,7 +16,7 @@ class Publisher(models.Model):
     company_name = models.TextField()
     phone_no = models.CharField(max_length=100, default='None')
 
-
+#TODO install djnago-utils and user Timestamp model for created_at and updated_at
 class Article(models.Model):
     headline = models.CharField(max_length=100)
     details = models.TextField()
