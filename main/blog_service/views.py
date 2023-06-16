@@ -6,9 +6,10 @@ from rest_framework import generics, response, status
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from django.db.models import Q
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 class ReporterView(generics.GenericAPIView):
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
     queryset = Reporter.objects.all()
     serializer_class = ReporterSerializers
 
