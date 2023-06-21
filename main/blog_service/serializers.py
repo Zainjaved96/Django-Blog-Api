@@ -1,6 +1,15 @@
-from .models import  Article, Publisher
+from .models import Article, Publisher
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from djoser.serializers import UserSerializer
+
+
+class ExtendedUserSerializer(UserSerializer):
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+
+    class Meta(UserSerializer.Meta):
+        fields = UserSerializer.Meta.fields + ['first_name', 'last_name']
 
 
 # from .models import Reporter
@@ -10,7 +19,6 @@ from rest_framework import serializers
 #     class Meta:
 #         model = Reporter
 #         fields = "__all__"
-
 
 
 class PublisherSerializers(serializers.ModelSerializer):
@@ -26,6 +34,15 @@ class ArticleSerializers(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = "__all__"
+        # read_only_fields = ("user",)
+        # extra_kwargs = {
+        #     'user': {'read_only': True},
+        #
+        # }
+
+    def create(self, validated_data):
+        validated_data['user'] = self.context["request"].user
+        return super().create(validated_data)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -34,7 +51,7 @@ class ArticleSerializers(serializers.ModelSerializer):
         data['user'] = {
             'id': user.id,
             'username': user.username,
-            'email':user.email
+            'email': user.email
             # Add any other fields you want to include from the User model
         }
         data['publisher'] = PublisherSerializers(instance.publisher.all(), many=True).data

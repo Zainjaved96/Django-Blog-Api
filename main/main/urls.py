@@ -34,7 +34,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('auth/', include('djoser.urls')),
+    path('user/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('admin/', admin.site.urls),
     path('blog_service/', include('blog_service.urls')),
@@ -45,7 +45,3 @@ urlpatterns = [
 
 ]
 
-
-SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
-}

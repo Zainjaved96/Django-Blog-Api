@@ -113,6 +113,7 @@ class ArticleView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serialized = self.get_serializer(data=request.data)
         if serialized.is_valid():
+            # serialized.validated_data["user"] = request.user
             serialized.save()
             return response.Response(serialized.data, status=status.HTTP_201_CREATED)
         return response.Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
