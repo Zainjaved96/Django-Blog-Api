@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'blog_service',
-    'djoser'
+    'djoser',
+    'auth_service'
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -51,16 +52,18 @@ REST_FRAMEWORK = {
 }
 
 DJOSER = {
+    'LOGIN_FIELD': 'email',
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': '#/activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {
-
-        'user_create': 'djoser.serializers.UserCreateSerializer',
-        'user_create_password_retype': 'djoser.serializers.UserCreatePasswordRetypeSerializer',
-        'user_delete': 'djoser.serializers.UserDeleteSerializer',
+        # 'user_create': 'djoser.serializers.UserCreateSerializer',
+        # 'user_create_password_retype': 'djoser.serializers.UserCreatePasswordRetypeSerializer',
+        # 'user_create_password_retype': 'blog_service.serializers.ExtendedUserCreateSerializer',
+        # 'user_delete': 'djoser.serializers.UserDeleteSerializer',
         'user': 'djoser.serializers.UserSerializer',
+        'user_create': 'auth_service.serializers.ExtendedUserCreateSerializer',
     },
 }
 
@@ -71,6 +74,7 @@ SIMPLE_JWT = {
 
 }
 SWAGGER_SETTINGS = {
+
     'SECURITY_DEFINITIONS': {
         'Bearer': {
             'type': 'apiKey',

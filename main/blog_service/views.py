@@ -219,5 +219,11 @@ class PublisherViewDetails(generics.GenericAPIView):
         return response.Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
+# Extend the user create view
 class ExtendedUserCreateView(generics.CreateAPIView):
     serializer_class = ExtendedUserCreateSerializer
+
+    def perform_create(self, serializer):
+        user = serializer.save()
+        user.is_active = True  # Set the user account as active
+        user.save()
