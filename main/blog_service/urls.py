@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from .views import   ArticleView, ArticleViewDetails, PublisherView, PublisherViewDetails
+from .views import   ArticleView, ArticleViewDetails, PublisherView, PublisherViewDetails, ExtendedUserCreateView
 
 
 urlpatterns = [
@@ -29,6 +29,8 @@ urlpatterns = [
     path("article/<int:pk>", ArticleViewDetails.as_view()),
 
     path("publisher/", PublisherView.as_view()),
-    path("publisher/<int:pk>", PublisherViewDetails.as_view())
+    path("publisher/<int:pk>", PublisherViewDetails.as_view()),
+
+    path('users/', ExtendedUserCreateView.as_view(), name='user-create'),
 
 ]

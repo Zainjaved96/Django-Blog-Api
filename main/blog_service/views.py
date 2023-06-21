@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from .models import Article, Publisher
-from .serializers import ArticleSerializers, PublisherSerializers
+from .serializers import ArticleSerializers, PublisherSerializers, ExtendedUserCreateSerializer
 from rest_framework import generics, response, status
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -113,10 +113,10 @@ class ArticleView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serialized = self.get_serializer(data=request.data)
         if serialized.is_valid():
-            # serialized.validated_data["user"] = request.user
             serialized.save()
             return response.Response(serialized.data, status=status.HTTP_201_CREATED)
         return response.Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class ArticleViewDetails(generics.GenericAPIView):
@@ -217,3 +217,7 @@ class PublisherViewDetails(generics.GenericAPIView):
             data.delete()
             return response.Response(status=status.HTTP_204_NO_CONTENT)
         return response.Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+class ExtendedUserCreateView(generics.CreateAPIView):
+    serializer_class = ExtendedUserCreateSerializer

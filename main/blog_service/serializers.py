@@ -1,15 +1,15 @@
 from .models import Article, Publisher
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from djoser.serializers import UserSerializer
+from djoser.serializers import UserCreateSerializer
 
 
-class ExtendedUserSerializer(UserSerializer):
+class ExtendedUserCreateSerializer(UserCreateSerializer):
     first_name = serializers.CharField(required=True)
     last_name = serializers.CharField(required=True)
 
-    class Meta(UserSerializer.Meta):
-        fields = UserSerializer.Meta.fields + ['first_name', 'last_name']
+    class Meta(UserCreateSerializer.Meta):
+        fields = UserCreateSerializer.Meta.fields + ('first_name', 'last_name')
 
 
 # from .models import Reporter
@@ -28,31 +28,18 @@ class PublisherSerializers(serializers.ModelSerializer):
 
 
 class ArticleSerializers(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     publisher = serializers.PrimaryKeyRelatedField(queryset=Publisher.objects.all(), many=True)
+    user = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Article
-        fields = "__all__"
-        # read_only_fields = ("user",)
-        # extra_kwargs = {
-        #     'user': {'read_only': True},
-        #
-        # }
-
-    def create(self, validated_data):
-        validated_data['user'] = self.context["request"].user
-        return super().create(validated_data)
+        fields = ["headline", "details", "publisher", "user"]
+        read_only_fields = ['user']
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
         user_id = data['user']
-        user = User.objects.get(id=user_id)
-        data['user'] = {
-            'id': user.id,
-            'username': user.username,
-            'email': user.email
-            # Add any other fields you want to include from the User model
-        }
+        data['user'] = user_id
         data['publisher'] = PublisherSerializers(instance.publisher.all(), many=True).data
         return data
+
