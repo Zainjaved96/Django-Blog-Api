@@ -63,7 +63,7 @@ DJOSER = {
         # 'user_create_password_retype': 'blog_service.serializers.ExtendedUserCreateSerializer',
         # 'user_delete': 'djoser.serializers.UserDeleteSerializer',
         'user': 'djoser.serializers.UserSerializer',
-        'user_create': 'auth_service.serializers.ExtendedUserCreateSerializer',
+        'user_create': 'user.serializers.ExtendedUserCreateSerializer',
     },
 }
 

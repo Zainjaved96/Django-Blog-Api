@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from .models import Article, Publisher
-from .serializers import ArticleSerializers, PublisherSerializers, ExtendedUserCreateSerializer
+from .serializers import ArticleSerializers, PublisherSerializers
 from rest_framework import generics, response, status
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -220,10 +220,10 @@ class PublisherViewDetails(generics.GenericAPIView):
 
 
 # Extend the user create view
-class ExtendedUserCreateView(generics.CreateAPIView):
-    serializer_class = ExtendedUserCreateSerializer
-
-    def perform_create(self, serializer):
-        user = serializer.save()
-        user.is_active = True  # Set the user account as active
-        user.save()
+# class ExtendedUserCreateView(generics.CreateAPIView):
+#     serializer_class = ExtendedUserCreateSerializer
+#
+#     def perform_create(self, serializer):
+#         user = serializer.save()
+#         user.is_active = True  # Set the user account as active
+#         user.save()

@@ -15,13 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from .views import   ArticleView, ArticleViewDetails, PublisherView, PublisherViewDetails, ExtendedUserCreateView
+from .views import   ArticleView, ArticleViewDetails, PublisherView, PublisherViewDetails
 
 
 urlpatterns = [
     # path("reporter/", ReporterView.as_view()),
     # path("reporter/<int:pk>/", ReporterView.as_view())
-    #
+
     # path("reporter/", ReporterView.as_view()),
     # path("reporter/<int:pk>", ReporterViewDetails.as_view()),
 
@@ -31,6 +31,6 @@ urlpatterns = [
     path("publisher/", PublisherView.as_view()),
     path("publisher/<int:pk>", PublisherViewDetails.as_view()),
 
-    path('users/', ExtendedUserCreateView.as_view(), name='user-create'),
+
 
 ]
