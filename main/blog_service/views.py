@@ -101,8 +101,9 @@ class ArticleView(generics.GenericAPIView):
         if search_key:
             data = queryset.filter(
                 Q(headline__icontains=search_key) |
-                Q(reporter__first_name__icontains=search_key) |
-                Q(reporter__last_name__icontains=search_key)
+                Q(user__first_name__icontains=search_key) |
+                Q(user__last_name__icontains=search_key) |
+                Q(user__username__icontains=search_key)
             )
         else:
             data = queryset.all()
