@@ -1,7 +1,7 @@
-
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from djoser.serializers import UserCreateSerializer
+
 
 class ExtendedUserCreateSerializer(UserCreateSerializer):
     first_name = serializers.CharField(required=True)
@@ -10,5 +10,3 @@ class ExtendedUserCreateSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
         model = User
         fields = ("password", "username", "email", "first_name", "last_name")
-
-

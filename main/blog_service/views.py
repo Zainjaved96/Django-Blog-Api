@@ -118,7 +118,6 @@ class ArticleView(generics.GenericAPIView):
         return response.Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class ArticleViewDetails(generics.GenericAPIView):
     permission_classes = []
     queryset = Article.objects.all()
@@ -217,7 +216,6 @@ class PublisherViewDetails(generics.GenericAPIView):
             data.delete()
             return response.Response(status=status.HTTP_204_NO_CONTENT)
         return response.Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
 
 # Extend the user create view
 # class ExtendedUserCreateView(generics.CreateAPIView):
