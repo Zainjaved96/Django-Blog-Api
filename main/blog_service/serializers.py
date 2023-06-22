@@ -12,7 +12,7 @@ class PublisherSerializers(serializers.ModelSerializer):
 class ArticleSerializers(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ["headline", "details", "publisher", "user"]
+        fields = ["id", "headline", "details", "publisher", "user"]
         read_only_fields = ['user']
 
     def create(self, validated_data):
