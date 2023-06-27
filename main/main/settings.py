@@ -57,6 +57,7 @@ DJOSER = {
     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': '#/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': False,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'SERIALIZERS': {
         # 'user_create': 'djoser.serializers.UserCreateSerializer',
         # 'user_create_password_retype': 'djoser.serializers.UserCreatePasswordRetypeSerializer',
@@ -65,11 +66,12 @@ DJOSER = {
         'user': 'djoser.serializers.UserSerializer',
         'user_create': 'user.serializers.ExtendedUserCreateSerializer',
     },
+
 }
 
 SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=50),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(minutes=60),
 
 }
@@ -125,6 +127,13 @@ DATABASES = {
     }
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'zain.javed.965@gmail.com'
+EMAIL_HOST_PASSWORD = 'pwoxbvydsolfzzow'
+EMAIL_USE_TLS = True
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -161,5 +170,3 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
